@@ -8,11 +8,13 @@ function useTheme() {
     const [theme, setTheme] = useState<Theme>();
 
     useEffect(() => {
-        const currentTheme = localStorage.getItem("theme");
+        try {
+            const currentTheme = localStorage.getItem("theme");
 
-        console.log('init', currentTheme);
-
-        setTheme(currentTheme ? (currentTheme as Theme) : defaultTheme);
+            setTheme(currentTheme ? (currentTheme as Theme) : defaultTheme);
+        } catch (err) {
+            setTheme(defaultTheme);
+        }
     }, []);
 
     useEffect(() => {
@@ -29,10 +31,11 @@ function useTheme() {
         root.classList.remove("dark", "light", "system");
         root.classList.add(currentTheme);
 
-        console.log('theme changed', currentTheme);
-        console.log('theme changed ->', theme);
-
-        localStorage.setItem("theme", theme);
+        try {
+            localStorage.setItem("theme", theme);
+        } catch (err) {
+            // intenional: do nothing
+        }
     }, [theme]);
 
     return [theme, setTheme] as const;
