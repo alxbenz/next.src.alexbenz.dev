@@ -33,7 +33,7 @@ type Usage = 'intro' | 'contact';
 
 export interface Intro {
     h2: string;
-    p?: string[];
+    p: string[];
 }
 export interface SectionsEntity {
     id: string;

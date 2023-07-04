@@ -5,18 +5,15 @@ import { Intro } from "@/components/Home/Intro";
 import { Section } from "@/components/Home/Section";
 import { Skills } from "@/components/Home/Skills";
 import { Testimonials } from "@/components/Home/Testimonials";
+import { removeTags } from "@/helper/removeTags";
 
 import contentDE from "@/resources/content.de.json";
 import contentEN from "@/resources/content.en.json";
 import information from "@/resources/information.json";
 
 import { Content, Information } from "@/types";
+import Head from "next/head";
 import { useRouter } from "next/router";
-
-export const metadata = {
-    title: "home",
-    description: "what?",
-};
 
 export default function Page() {
     const { locale } = useRouter();
@@ -36,6 +33,18 @@ export default function Page() {
 
     return (
         <div className="relative text-sm/6 ">
+            <Head>
+                <title>
+                    {`${removeTags(content.intro.h2)} | ${
+                        information.contact.web
+                    }`}
+                </title>
+                <meta
+                    name="description"
+                    content={content.intro.p[0]}
+                    key="desc"
+                />
+            </Head>
             <Navigation />
             <Intro
                 intro={content.intro}
